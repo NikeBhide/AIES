@@ -211,6 +211,24 @@ function scoreActivity(a, moodSet, catSet){
   return score;
 }
 
+let scoringMethod = 'offline (tag overlap)';
+function moodsToText(moodSet){ return [...moodSet].join(', '); }
+
+// Ask the Python backend for embedding scores. Returns one {activityName: score}
+// per text, or null if the backend isn't reachable (page then uses tag overlap).
+async function fetchScores(texts){
+  try{
+    const r = await fetch('/api/scores', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({queries: texts})});
+    if(!r.ok) throw new Error('bad status');
+    const j = await r.json();
+    scoringMethod = j.method === 'embedding' ? 'semantic embeddings (MiniLM)' : j.method;
+    return j.scores;
+  }catch(e){
+    scoringMethod = 'offline (tag overlap)';
+    return null;
+  }
+}
+
 function filterPool(budgetRank, groupSize){
   return ACTIVITIES.filter(a => COST_RANK[a.ct] <= budgetRank && a.gmax >= groupSize);
 }
@@ -230,15 +248,19 @@ function card(a, extraHtml){
   </div>`;
 }
 
-function runSolo(){
+async function runSolo(){
   document.getElementById('tabs-wrap').style.display='none';
   const budgetRank = +document.getElementById('budget').value;
   const gsize = +document.getElementById('groupsize').value || 1;
   const pool = filterPool(budgetRank, gsize);
-  const scored = pool.map(a => ({a, s: scoreActivity(a, soloMoods, soloCats)}))
-    .sort((x,y)=>y.s-x.s).slice(0,8);
+  const remote = soloMoods.size ? await fetchScores([moodsToText(soloMoods)]) : null;
+  const scored = pool.map(a => {
+    let s = scoreActivity(a, soloMoods, soloCats);
+    if(remote){ s = remote[0][a.n] ?? 0; if(soloCats.size && soloCats.has(a.c)) s += 0.5; }
+    return {a, s};
+  }).sort((x,y)=>y.s-x.s).slice(0,8);
   document.getElementById('res-title').textContent = soloMoods.size ? 'Top matches for you' : 'Showing top options (pick a mood to personalize)';
-  document.getElementById('res-sub').textContent = `${pool.length} activities fit your budget and group size — ranked by mood/interest match.`;
+  document.getElementById('res-sub').textContent = `${pool.length} activities fit your budget and group size — ranked by mood/interest match. Scoring: ${scoringMethod}.`;
   const results = document.getElementById('results');
   if(!scored.length){ results.innerHTML = '<div class="empty">Nothing fits those filters — try a higher budget.</div>'; return; }
   results.innerHTML = `<div class="cards">${scored.map(x=>card(x.a)).join('')}</div>`;
@@ -255,15 +277,16 @@ function aggregate(strategy, table, memberNames){
   });
 }
 
-function runGroup(){
+async function runGroup(){
   document.getElementById('tabs-wrap').style.display='flex';
   const budgetRank = +document.getElementById('budget').value;
   const gsize = +document.getElementById('groupsize').value || members.length;
   const pool = filterPool(budgetRank, gsize);
   const names = members.map(m=>m.name||'Member');
+  const remote = members.every(m=>m.moods.size) ? await fetchScores(members.map(m=>moodsToText(m.moods))) : null;
   const table = pool.map(a => {
     const scores = {};
-    members.forEach((m,i)=>{ scores[names[i]] = scoreActivity(a, m.moods, null); });
+    members.forEach((m,i)=>{ scores[names[i]] = remote ? (remote[i][a.n] ?? 0) : scoreActivity(a, m.moods, null); });
     return {a, scores};
   });
 
@@ -296,7 +319,7 @@ function renderGroupResults(){
     least_misery:'Least Misery — nobody ends up unhappy',
     borda:'Borda Count — rank-based group voting'};
   document.getElementById('res-title').textContent = labels[currentStrategy];
-  document.getElementById('res-sub').textContent = `${table.length} activities fit the shared budget and group size, scored against ${names.length} member${names.length>1?'s':''}.`;
+  document.getElementById('res-sub').textContent = `${table.length} activities fit the shared budget and group size, scored against ${names.length} member${names.length>1?'s':''}. Scoring: ${scoringMethod}.`;
   const results = document.getElementById('results');
   if(!ranked.length){ results.innerHTML = '<div class="empty">Nothing fits those filters — try a higher budget.</div>'; return; }
   results.innerHTML = `<div class="cards">${ranked.map(row=>{

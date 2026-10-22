@@ -12,7 +12,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-DATA_PATH = '/home/claude/AIES/data/activity_types_tagged.csv'
+from pathlib import Path
+DATA_PATH = Path(__file__).resolve().parent.parent / 'data' / 'activity_types_tagged.csv'
 
 COST_TIER_RANK = {'free': 0, 'low': 1, 'medium': 2, 'high': 3, 'premium': 4, 'unknown': 2}
 
@@ -39,19 +40,39 @@ def build_text_corpus(df):
 
 
 class ActivityIndex:
-    """Fits TF-IDF once over the activity pool; scores any query text against it."""
+    """
+    Scores any query text against every activity.
 
-    def __init__(self, df):
+    method='embedding' (default): sentence-transformers 'all-MiniLM-L6-v2'.
+        Matches by MEANING, so "relaxing" is close to "relaxed" and "chill".
+    method='tfidf': the old word-overlap baseline, kept for comparison.
+
+    Both give score(query_text) -> one number per row of df, in order,
+    so filters.py, single_user.py and group.py need no changes.
+    """
+
+    def __init__(self, df, method='embedding'):
         self.df = df
+        self.method = method
         corpus = build_text_corpus(df)
-        self.vectorizer = TfidfVectorizer(stop_words='english')
-        self.matrix = self.vectorizer.fit_transform(corpus)
+        if method == 'embedding':
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer('all-MiniLM-L6-v2')
+            # normalized vectors: dot product == cosine similarity
+            self.matrix = self.model.encode(corpus, normalize_embeddings=True)
+        elif method == 'tfidf':
+            self.vectorizer = TfidfVectorizer(stop_words='english')
+            self.matrix = self.vectorizer.fit_transform(corpus)
+        else:
+            raise ValueError("method must be 'embedding' or 'tfidf'")
 
     def score(self, query_text):
-        """Returns a similarity score (0-1ish) for every row in self.df, in order."""
+        """Returns a similarity score for every row in self.df, in order."""
+        if self.method == 'embedding':
+            q = self.model.encode([query_text], normalize_embeddings=True)
+            return (self.matrix @ q[0]).flatten()
         query_vec = self.vectorizer.transform([query_text])
-        sims = cosine_similarity(query_vec, self.matrix).flatten()
-        return sims
+        return cosine_similarity(query_vec, self.matrix).flatten()
 
 
 if __name__ == '__main__':

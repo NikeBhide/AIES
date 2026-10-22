@@ -63,6 +63,18 @@ This runs a single-user example and a 3-person group example (with
 deliberately mismatched moods/budgets) through all three aggregation
 strategies, so you can see them disagree — that disagreement is the point.
 
+## Run the website with the Python backend
+
+```bash
+cd app
+python server.py
+```
+Then open http://127.0.0.1:8080/ . The page sends each member's moods to the
+backend, which scores activities with the sentence-embedding model; filtering
+and the Average / Least Misery / Borda voting still happen in the page. If the
+backend isn't running, the page falls back to its built-in tag-overlap scoring
+(the footer text under the results says which one is active).
+
 ## Project structure
 
 ```
