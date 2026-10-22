@@ -1,0 +1,7 @@
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+
+# Optional upgrade path (not required for the current TF-IDF baseline):
+# sentence-transformers>=2.2   # swap into app/vectorizer.py for real sentence embeddings
+# streamlit>=1.28              # if you build a UI on top of app/demo.py
