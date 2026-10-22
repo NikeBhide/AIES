@@ -81,6 +81,58 @@ select,input[type=number]{width:100%;background:var(--bg-card);border:1px solid 
 .bar-fill{height:100%;background:var(--accent2);}
 .empty{color:var(--text-dim);font-size:13.5px;padding:40px 20px;text-align:center;border:1px dashed var(--border);border-radius:12px;}
 .note{font-size:11.5px;color:var(--text-dim);margin-top:16px;line-height:1.6;}
+/* ==== new flow ==== */
+.flow{max-width:760px;margin:0 auto;}
+.stage{display:none;}
+.stage.on{display:block;}
+.stage-title{font-size:22px;font-weight:600;margin-bottom:4px;}
+.stage-sub{font-size:13.5px;color:var(--text-dim);margin:0 0 20px;}
+.steps{display:flex;gap:8px;margin-bottom:22px;}
+.steps span{flex:1;height:4px;border-radius:2px;background:var(--border);}
+.steps span.on{background:var(--accent);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media (max-width:600px){.row2{grid-template-columns:1fr;}}
+.btn{border:none;border-radius:9px;padding:12px 18px;font-family:var(--font-display);font-weight:600;font-size:14px;cursor:pointer;background:var(--accent);color:var(--accent-ink);}
+.btn:hover{opacity:.9;}
+.btn.ghost{background:none;border:1px solid var(--border);color:var(--text);}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);opacity:1;}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.slider-val{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;}
+.slider-val b{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--accent);}
+.slider-val span{font-size:12.5px;color:var(--text-dim);}
+input[type=range].slider{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;outline:none;padding:0;border:none;
+  background:linear-gradient(to right,var(--accent) 0,var(--accent) var(--pct,33%),var(--border) var(--pct,33%),var(--border) 100%);}
+input[type=range].slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--accent);border:4px solid var(--bg-elev);box-shadow:0 0 0 1px var(--accent);cursor:pointer;}
+input[type=range].slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:4px solid var(--bg-elev);cursor:pointer;}
+.slider-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-top:6px;}
+.check{display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer;}
+.check input{width:auto;}
+details.dd{position:relative;}
+details.dd summary{list-style:none;cursor:pointer;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px 34px 10px 12px;font-size:13.5px;color:var(--text-dim);position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+details.dd summary::-webkit-details-marker{display:none;}
+details.dd summary::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-dim);}
+details.dd summary.has{color:var(--text);}
+details.dd[open] summary{border-color:var(--accent);}
+.dd-menu{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.25);max-height:260px;overflow:auto;}
+.dd-menu label{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;font-size:13.5px;cursor:pointer;margin:0;color:var(--text);font-weight:500;}
+.dd-menu label:hover{background:var(--bg-card);}
+.dd-menu input{width:auto;}
+.person{border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;background:var(--bg-elev);}
+.person.bad{border-color:var(--danger);}
+.person-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.person-head .num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0;}
+.person-head input{background:transparent;border:none;border-bottom:1px solid var(--border);border-radius:0;padding:4px 0;font-family:var(--font-display);font-weight:600;font-size:15px;}
+.person input[type=text],.person-head input{width:100%;background:var(--bg-card);color:var(--text);}
+.person input.note-in{border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--font-body);font-size:13.5px;margin-top:12px;}
+.person-head input{background:transparent;}
+.err{color:var(--danger);font-size:13px;margin-top:10px;min-height:18px;}
+.banner{border:1px solid var(--accent);background:rgba(242,169,59,.08);border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:14px;}
+.refresh-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;}
+.refresh-row small{color:var(--text-dim);font-size:12.5px;}
+.worst{font-size:11.5px;color:var(--text-dim);margin-top:8px;}
+.worst b{color:var(--danger);font-weight:600;}
+.method{font-size:12px;color:var(--text-dim);margin-top:4px;}
 </style>
 </head>
 <body>
@@ -88,59 +140,74 @@ select,input[type=number]{width:100%;background:var(--bg-card);border:1px solid 
 <header>
   <div class="brand">
     <div class="brand-mark">🧭</div>
-    <div><h1>Hangout Finder</h1><p>Mood + budget matched activities, Bangalore</p></div>
+    <div><h1>Hangout Finder</h1><p>Everyone shares a vibe, we find what works for the group</p></div>
   </div>
-  <div class="modes">
-    <button id="mode-solo" class="active">Solo</button>
-    <button id="mode-group">Group</button>
-  </div>
+  <button class="btn ghost" id="restart">Start over</button>
 </header>
 
-<div class="grid">
-  <div class="panel">
-    <div class="field" id="mood-field">
-      <label>Mood</label>
-      <div class="chips" id="mood-chips"></div>
-    </div>
-    <div class="field">
-      <label>Interested in (optional)</label>
-      <div class="chips" id="cat-chips"></div>
-    </div>
-    <div class="field">
-      <label>Budget</label>
-      <select id="budget">
-        <option value="0">Free</option>
-        <option value="1">Low (up to ~₹300)</option>
-        <option value="2" selected>Medium (up to ~₹1000)</option>
-        <option value="3">High (up to ~₹2500)</option>
-        <option value="4">No limit</option>
-      </select>
-    </div>
-    <div class="field" id="groupsize-field">
-      <label>Group size</label>
-      <input type="number" id="groupsize" value="2" min="1" max="10">
-    </div>
-    <div class="field" id="members-field" style="display:none;">
-      <label>Members</label>
-      <div id="members"></div>
-      <button class="addmember" id="add-member">+ Add member</button>
-    </div>
-    <button class="go" id="go">Find activities</button>
-  </div>
+<div class="flow">
+  <div class="steps"><span id="st1" class="on"></span><span id="st2"></span><span id="st3"></span></div>
 
-  <div>
-    <div id="tabs-wrap" style="display:none;" class="tabs">
-      <button class="active" data-strat="average">Average</button>
-      <button data-strat="least_misery">Least Misery</button>
-      <button data-strat="borda">Borda Count</button>
+  <!-- Stage 1: setup -->
+  <section class="stage on" id="stage1">
+    <h2 class="stage-title">Plan a hangout</h2>
+    <p class="stage-sub">Start with the basics. Next, everyone adds their own vibe.</p>
+    <div class="panel">
+      <div class="row2">
+        <div class="field">
+          <label for="people">How many people?</label>
+          <select id="people"></select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <label class="check"><input type="checkbox" id="outdoor" checked> Outdoor activities are fine</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="budget">Budget per person</label>
+        <div class="slider-val"><b id="budget-val">₹1000</b><span id="budget-tier"></span></div>
+        <input type="range" class="slider" id="budget" min="0" max="3000" step="50" value="1000">
+        <div class="slider-ends"><span>Free</span><span>₹3000+ (no limit)</span></div>
+      </div>
+      <div class="actions"><button class="btn" id="to-vibes">Next: everyone's vibe →</button></div>
     </div>
+  </section>
+
+  <!-- Stage 2: each person's vibe -->
+  <section class="stage" id="stage2">
+    <h2 class="stage-title">What's everyone's vibe?</h2>
+    <p class="stage-sub">Each person fills in their own. The scoring agent matches activities to every person, then balances the group.</p>
+    <div id="members"></div>
+    <div class="err" id="err"></div>
+    <div class="actions">
+      <button class="btn ghost" id="back-setup">← Back</button>
+      <button class="btn" id="find">Find hangouts</button>
+    </div>
+  </section>
+
+  <!-- Stage 3: results -->
+  <section class="stage" id="stage3">
     <div class="results-head">
-      <h2 id="res-title">Pick a mood to get started</h2>
-      <p id="res-sub">Filters by budget and group size, ranks by how well activities match the mood(s) you pick.</p>
+      <h2 id="res-title">Your group's picks</h2>
+      <p id="res-sub"></p>
+      <div class="method" id="method"></div>
     </div>
-    <div id="results"><div class="empty">Your matches will show up here.</div></div>
-    <p class="note">Sample venues are real Bangalore places pulled from Zomato + OpenStreetMap, shown as examples — not distance-filtered. Solo mode ranks by mood/interest overlap; Group mode compares three ways of combining everyone's preferences: Average (best for the whole group on balance), Least Misery (nobody ends up truly unhappy), and Borda Count (rank-based voting across members).</p>
-  </div>
+    <div class="tabs" id="tabs">
+      <button class="active" data-strat="average" title="Best overall fit for the group on balance">Balanced</button>
+      <button data-strat="least_misery" title="Nobody ends up truly unhappy">Fair to everyone</button>
+      <button data-strat="borda" title="Rank-based voting across members">Group vote</button>
+    </div>
+    <div id="banner"></div>
+    <div id="results"></div>
+    <div class="refresh-row">
+      <small id="refresh-note"></small>
+      <div class="actions" style="margin:0;">
+        <button class="btn ghost" id="edit-vibes">Edit vibes</button>
+        <button class="btn" id="refresh">↻ Refresh suggestions</button>
+      </div>
+    </div>
+    <p class="note">Sample venues are real Bangalore places pulled from Zomato + OpenStreetMap, shown as examples and not distance-filtered. Balanced = best overall fit, Fair to everyone = protect the least happy person, Group vote = rank-based voting.</p>
+  </section>
 </div>
 </div>
 
@@ -150,216 +217,193 @@ const MOODS = ['relaxed','energetic','social','adventurous','creative','competit
 const CATS = [...new Set(ACTIVITIES.map(a=>a.c))].sort();
 const COST_LABEL = {free:'Free',low:'Low',medium:'Medium',high:'High',premium:'Premium'};
 const COST_RANK = {free:0,low:1,medium:2,high:3,premium:4,unknown:2};
+const PAGE = 6, MAX_REFRESH = 3;
 
-let mode = 'solo';
-let soloMoods = new Set();
-let soloCats = new Set();
-let members = [{name:'You', moods:new Set()}];
-let currentStrategy = 'average';
-let lastGroupResult = null;
-
-function chip(label, on, onClick){
-  const b = document.createElement('button');
-  b.className = 'chip' + (on?' on':'');
-  b.textContent = label;
-  b.onclick = onClick;
-  return b;
-}
+const state = {people:3, budget:1000, outdoor:true, members:[], strategy:'average', refresh:0, table:null, scoringMethod:'offline (tag overlap)'};
+const $ = id => document.getElementById(id);
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1).replace(/_/g,' '); }
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function renderSoloChips(){
-  const mc = document.getElementById('mood-chips'); mc.innerHTML='';
-  MOODS.forEach(m => mc.appendChild(chip(cap(m), soloMoods.has(m), ()=>{
-    soloMoods.has(m) ? soloMoods.delete(m) : soloMoods.add(m); renderSoloChips();
-  })));
-  const cc = document.getElementById('cat-chips'); cc.innerHTML='';
-  CATS.forEach(c => cc.appendChild(chip(cap(c), soloCats.has(c), ()=>{
-    soloCats.has(c) ? soloCats.delete(c) : soloCats.add(c); renderSoloChips();
-  })));
+/* ---------- budget slider ---------- */
+function budgetRank(v){ return v===0?0 : v<=300?1 : v<=1000?2 : v<=2500?3 : 4; }
+function updateBudget(){
+  const v = +$('budget').value; state.budget = v;
+  $('budget').style.setProperty('--pct', (v/3000*100)+'%');
+  $('budget-val').textContent = v===0 ? 'Free' : v>=3000 ? 'No limit' : '₹'+v;
+  const names = ['free activities only','low-cost activities','up to medium-cost activities','up to high-cost activities','everything, including premium'];
+  $('budget-tier').textContent = 'Showing ' + names[budgetRank(v)];
 }
 
+/* ---------- stages ---------- */
+function showStage(n){
+  [1,2,3].forEach(i=>{ $('stage'+i).classList.toggle('on', i===n); $('st'+i).classList.toggle('on', i<=n); });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------- multi-select dropdown ---------- */
+function dd(placeholder, options, set){
+  const d = document.createElement('details'); d.className = 'dd';
+  const s = document.createElement('summary'); d.appendChild(s);
+  const upd = ()=>{ s.textContent = set.size ? [...set].map(cap).join(', ') : placeholder; s.classList.toggle('has', set.size>0); };
+  upd();
+  const menu = document.createElement('div'); menu.className = 'dd-menu';
+  options.forEach(o=>{
+    const l = document.createElement('label');
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = set.has(o);
+    cb.onchange = ()=>{ cb.checked ? set.add(o) : set.delete(o); upd(); const p = d.closest('.person'); if(p && set.size) p.classList.remove('bad'); };
+    l.appendChild(cb); l.appendChild(document.createTextNode(cap(o))); menu.appendChild(l);
+  });
+  d.appendChild(menu);
+  return d;
+}
+document.addEventListener('click', e=>{
+  document.querySelectorAll('details.dd[open]').forEach(d=>{ if(!d.contains(e.target)) d.removeAttribute('open'); });
+});
+
+/* ---------- members ---------- */
+function syncMembers(){
+  while(state.members.length < state.people) state.members.push({name:'Person '+(state.members.length+1), moods:new Set(), cats:new Set(), extra:''});
+  state.members.length = state.people;
+}
 function renderMembers(){
-  const wrap = document.getElementById('members'); wrap.innerHTML='';
-  members.forEach((mem,i) => {
-    const div = document.createElement('div'); div.className='member';
-    const head = document.createElement('div'); head.className='member-head';
-    const inp = document.createElement('input'); inp.value = mem.name;
-    inp.oninput = e => mem.name = e.target.value;
-    head.appendChild(inp);
-    if(members.length>1){
-      const rm = document.createElement('button'); rm.className='rm'; rm.textContent='×';
-      rm.onclick = ()=>{ members.splice(i,1); renderMembers(); };
-      head.appendChild(rm);
-    }
-    div.appendChild(head);
-    const chips = document.createElement('div'); chips.className='chips';
-    MOODS.forEach(m => chips.appendChild(chip(cap(m), mem.moods.has(m), ()=>{
-      mem.moods.has(m) ? mem.moods.delete(m) : mem.moods.add(m); renderMembers();
-    })));
-    div.appendChild(chips);
-    wrap.appendChild(div);
+  const wrap = $('members'); wrap.innerHTML = '';
+  state.members.forEach((m,i)=>{
+    const card = document.createElement('div'); card.className = 'person'; card.id = 'person'+i;
+    const head = document.createElement('div'); head.className = 'person-head';
+    const num = document.createElement('div'); num.className = 'num'; num.textContent = i+1;
+    const name = document.createElement('input'); name.type = 'text'; name.value = m.name; name.maxLength = 30;
+    name.oninput = e => m.name = e.target.value;
+    head.appendChild(num); head.appendChild(name); card.appendChild(head);
+    const row = document.createElement('div'); row.className = 'row2';
+    const f1 = document.createElement('div'); f1.className = 'field';
+    f1.innerHTML = '<label>Vibe (pick one or more)</label>'; f1.appendChild(dd('Select vibes…', MOODS, m.moods));
+    const f2 = document.createElement('div'); f2.className = 'field';
+    f2.innerHTML = '<label>Interested in (optional)</label>'; f2.appendChild(dd('Select interests…', CATS, m.cats));
+    row.appendChild(f1); row.appendChild(f2); card.appendChild(row);
+    const note = document.createElement('input'); note.type = 'text'; note.className = 'note-in'; note.maxLength = 200;
+    note.placeholder = 'Anything else? e.g. "something cheap and chill after work" (optional)';
+    note.value = m.extra; note.oninput = e => m.extra = e.target.value;
+    card.appendChild(note);
+    wrap.appendChild(card);
   });
 }
 
-function scoreActivity(a, moodSet, catSet){
-  let score = 0;
-  if(moodSet.size){
-    const overlap = a.m.filter(m=>moodSet.has(m)).length;
-    score += overlap / Math.max(moodSet.size,1);
-  }
-  if(catSet && catSet.size && catSet.has(a.c)) score += 0.5;
-  return score;
+/* ---------- scoring agent ---------- */
+function memberText(m){
+  let t = [...m.moods].join(', ');
+  if(m.cats.size) t += '. Interested in ' + [...m.cats].join(', ');
+  if(m.extra.trim()) t += '. ' + m.extra.trim();
+  return t;
 }
-
-let scoringMethod = 'offline (tag overlap)';
-function moodsToText(moodSet){ return [...moodSet].join(', '); }
-
-// Ask the Python backend for embedding scores. Returns one {activityName: score}
-// per text, or null if the backend isn't reachable (page then uses tag overlap).
-async function fetchScores(texts){
+function overlapScore(a, m){            // offline fallback: mood-tag overlap
+  let s = 0;
+  if(m.moods.size) s += a.m.filter(x=>m.moods.has(x)).length / m.moods.size;
+  if(m.cats.size && m.cats.has(a.c)) s += 0.5;
+  return s;
+}
+async function fetchScores(texts){      // Python backend (embeddings); null if unreachable
   try{
     const r = await fetch('/api/scores', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({queries: texts})});
     if(!r.ok) throw new Error('bad status');
     const j = await r.json();
-    scoringMethod = j.method === 'embedding' ? 'semantic embeddings (MiniLM)' : j.method;
+    state.scoringMethod = j.method === 'embedding' ? 'semantic embeddings (MiniLM)' : 'keyword matching (TF-IDF fallback)';
     return j.scores;
   }catch(e){
-    scoringMethod = 'offline (tag overlap)';
+    state.scoringMethod = 'offline (tag overlap)';
     return null;
   }
 }
 
-function filterPool(budgetRank, groupSize){
-  return ACTIVITIES.filter(a => COST_RANK[a.ct] <= budgetRank && a.gmax >= groupSize);
-}
-
-function card(a, extraHtml){
-  const venues = a.v.length ? `<div class="venues">e.g. <b>${a.v.join('</b>, <b>')}</b></div>` : '';
-  return `<div class="card">
-    <div class="cat">${cap(a.c)}</div>
-    <h3>${a.n}</h3>
-    <div class="meta">
-      <span class="tag">${COST_LABEL[a.ct]||a.ct}</span>
-      <span class="tag">${cap(a.e)} energy</span>
-      <span class="tag">${cap(a.io)}</span>
-    </div>
-    ${extraHtml||''}
-    ${venues}
-  </div>`;
-}
-
-async function runSolo(){
-  document.getElementById('tabs-wrap').style.display='none';
-  const budgetRank = +document.getElementById('budget').value;
-  const gsize = +document.getElementById('groupsize').value || 1;
-  const pool = filterPool(budgetRank, gsize);
-  const remote = soloMoods.size ? await fetchScores([moodsToText(soloMoods)]) : null;
-  const scored = pool.map(a => {
-    let s = scoreActivity(a, soloMoods, soloCats);
-    if(remote){ s = remote[0][a.n] ?? 0; if(soloCats.size && soloCats.has(a.c)) s += 0.5; }
-    return {a, s};
-  }).sort((x,y)=>y.s-x.s).slice(0,8);
-  document.getElementById('res-title').textContent = soloMoods.size ? 'Top matches for you' : 'Showing top options (pick a mood to personalize)';
-  document.getElementById('res-sub').textContent = `${pool.length} activities fit your budget and group size — ranked by mood/interest match. Scoring: ${scoringMethod}.`;
-  const results = document.getElementById('results');
-  if(!scored.length){ results.innerHTML = '<div class="empty">Nothing fits those filters — try a higher budget.</div>'; return; }
-  results.innerHTML = `<div class="cards">${scored.map(x=>card(x.a)).join('')}</div>`;
-}
-
-function aggregate(strategy, table, memberNames){
-  return table.map(row => {
-    const vals = memberNames.map(n=>row.scores[n]);
-    let agg;
-    if(strategy==='average') agg = vals.reduce((a,b)=>a+b,0)/vals.length;
-    else if(strategy==='least_misery') agg = Math.min(...vals);
-    else agg = null; // borda computed separately below
-    return {...row, agg};
-  });
-}
-
-async function runGroup(){
-  document.getElementById('tabs-wrap').style.display='flex';
-  const budgetRank = +document.getElementById('budget').value;
-  const gsize = +document.getElementById('groupsize').value || members.length;
-  const pool = filterPool(budgetRank, gsize);
-  const names = members.map(m=>m.name||'Member');
-  const remote = members.every(m=>m.moods.size) ? await fetchScores(members.map(m=>moodsToText(m.moods))) : null;
-  const table = pool.map(a => {
-    const scores = {};
-    members.forEach((m,i)=>{ scores[names[i]] = remote ? (remote[i][a.n] ?? 0) : scoreActivity(a, m.moods, null); });
-    return {a, scores};
-  });
-
-  // borda: rank per member, points = n-1-rank
+/* ---------- group logic ---------- */
+const mean = a => a.reduce((x,y)=>x+y,0)/a.length;
+async function compute(){
+  const rank = budgetRank(state.budget);
+  const pool = ACTIVITIES.filter(a => COST_RANK[a.ct] <= rank && a.gmax >= state.people && (state.outdoor || a.io !== 'outdoor'));
+  const remote = await fetchScores(state.members.map(memberText));
+  const table = pool.map(a => ({a, scores: state.members.map((m,i)=> remote ? (remote[i][a.n] ?? 0) : overlapScore(a, m))}));
   const n = table.length;
-  const bordaPoints = names.map(()=>new Array(n).fill(0));
-  names.forEach((name,mi)=>{
-    const order = table.map((row,idx)=>({idx,v:row.scores[name]})).sort((x,y)=>y.v-x.v);
-    order.forEach((o,rank)=>{ bordaPoints[mi][o.idx] = n-1-rank; });
+  state.members.forEach((m,mi)=>{
+    const order = table.map((row,idx)=>({idx,v:row.scores[mi]})).sort((x,y)=>y.v-x.v);
+    order.forEach((o,r)=>{ table[o.idx].borda = (table[o.idx].borda||0) + (n-1-r); });
   });
-  table.forEach((row,idx)=>{ row.borda = names.reduce((sum,name,mi)=>sum+bordaPoints[mi][idx],0); });
-
-  lastGroupResult = {table, names};
-  renderGroupResults();
+  table.forEach(row=>{ row.avg = mean(row.scores); row.min = Math.min(...row.scores); });
+  state.table = table;
+}
+function ranked(){
+  const t = [...state.table];
+  if(state.strategy==='borda') return t.sort((x,y)=>(y.borda-x.borda)||(y.avg-x.avg));
+  if(state.strategy==='least_misery') return t.sort((x,y)=>(y.min-x.min)||(y.avg-x.avg));
+  return t.sort((x,y)=>y.avg-x.avg);
 }
 
-function renderGroupResults(){
-  if(!lastGroupResult) return;
-  const {table, names} = lastGroupResult;
-  let ranked;
-  if(currentStrategy==='borda') ranked = [...table].sort((x,y)=>y.borda-x.borda);
-  else if(currentStrategy==='least_misery') ranked = [...table].sort((x,y)=>Math.min(...names.map(n=>y.scores[n]))-Math.min(...names.map(n=>x.scores[n])));
-  else ranked = [...table].sort((x,y)=>{
-    const avgY = names.reduce((s,n)=>s+y.scores[n],0)/names.length;
-    const avgX = names.reduce((s,n)=>s+x.scores[n],0)/names.length;
-    return avgY-avgX;
-  });
-  ranked = ranked.slice(0,6);
-  const labels = {average:'Average — best overall fit for the group',
-    least_misery:'Least Misery — nobody ends up unhappy',
-    borda:'Borda Count — rank-based group voting'};
-  document.getElementById('res-title').textContent = labels[currentStrategy];
-  document.getElementById('res-sub').textContent = `${table.length} activities fit the shared budget and group size, scored against ${names.length} member${names.length>1?'s':''}. Scoring: ${scoringMethod}.`;
-  const results = document.getElementById('results');
-  if(!ranked.length){ results.innerHTML = '<div class="empty">Nothing fits those filters — try a higher budget.</div>'; return; }
-  results.innerHTML = `<div class="cards">${ranked.map(row=>{
-    const maxScore = Math.max(...names.map(n=>row.scores[n]), 0.001);
-    const bars = names.map(n=>`<div class="bar-row"><span class="name">${n}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max((row.scores[n]/maxScore*100),3)}%"></div></div></div>`).join('');
-    return card(row.a, `<div class="bars">${bars}</div>`);
-  }).join('')}</div>`;
+/* ---------- results ---------- */
+function card(row, maxScore){
+  const a = row.a;
+  const venues = a.v.length ? `<div class="venues">e.g. <b>${a.v.map(esc).join('</b>, <b>')}</b></div>` : '';
+  const bars = state.members.map((m,i)=>`<div class="bar-row"><span class="name">${esc(m.name||'Person '+(i+1))}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max(row.scores[i]/maxScore*100,3)}%"></div></div></div>`).join('');
+  let worst = '';
+  if(state.members.length>1){
+    const hi = Math.max(...row.scores), lo = row.min;
+    if(hi>0 && lo/hi < 0.6){ const w = state.members[row.scores.indexOf(lo)]; worst = `<div class="worst">Least matched: <b>${esc(w.name||'someone')}</b></div>`; }
+  }
+  return `<div class="card"><div class="cat">${esc(cap(a.c))}</div><h3>${esc(a.n)}</h3>
+    <div class="meta"><span class="tag">${esc(COST_LABEL[a.ct]||a.ct)}</span><span class="tag">${esc(cap(a.e))} energy</span><span class="tag">${esc(cap(a.io))}</span></div>
+    ${state.members.length>1 ? `<div class="bars">${bars}</div>` : ''}${worst}${venues}</div>`;
+}
+function renderResults(){
+  const t = ranked();
+  const start = state.refresh*PAGE, page = t.slice(start, start+PAGE);
+  const labels = {average:'Balanced — best overall fit', least_misery:'Fair to everyone — nobody left out', borda:'Group vote — rank-based'};
+  $('res-title').textContent = labels[state.strategy];
+  $('res-sub').textContent = `${state.table.length} activities fit your budget and group of ${state.people}, scored against ${state.members.length} vibe${state.members.length>1?'s':''}.`;
+  $('method').textContent = 'Scoring agent: ' + state.scoringMethod;
+  const maxScore = Math.max(0.001, ...state.table.flatMap(r=>r.scores));
+  $('banner').innerHTML = '';
+  if(!t.length){
+    $('results').innerHTML = '<div class="empty">Nothing fits those filters. Try a higher budget or allow outdoor activities.</div>';
+    $('refresh').disabled = true; $('refresh-note').textContent = ''; return;
+  }
+  const top = t[0];
+  if(state.members.length>1 && Math.max(...top.scores)>0 && top.min/Math.max(...top.scores) < 0.5){
+    const w = state.members[top.scores.indexOf(top.min)];
+    $('banner').innerHTML = `<div class="banner">No option is a great fit for everyone. <b>${esc(w.name||'Someone')}</b> is the least matched. Try raising the budget or adjusting vibes.</div>`;
+  }
+  $('results').innerHTML = page.length ? `<div class="cards">${page.map(r=>card(r,maxScore)).join('')}</div>` : '<div class="empty">No more suggestions.</div>';
+  const left = MAX_REFRESH - state.refresh;
+  const more = start + PAGE < t.length;
+  $('refresh').disabled = left<=0 || !more;
+  $('refresh-note').textContent = left<=0 ? 'Out of refreshes. Edit vibes or change the budget to search again.' : more ? `${left} refresh${left>1?'es':''} left` : 'No more suggestions.';
 }
 
-document.getElementById('mode-solo').onclick = ()=>{
-  mode='solo';
-  document.getElementById('mode-solo').classList.add('active');
-  document.getElementById('mode-group').classList.remove('active');
-  document.getElementById('mood-field').style.display='block';
-  document.getElementById('members-field').style.display='none';
-  renderSoloChips();
+/* ---------- wiring ---------- */
+for(let i=1;i<=10;i++){ const o=document.createElement('option'); o.value=i; o.textContent = i===1?'Just me':i+' people'; if(i===3) o.selected=true; $('people').appendChild(o); }
+$('people').onchange = e => state.people = +e.target.value;
+$('outdoor').onchange = e => state.outdoor = e.target.checked;
+$('budget').oninput = updateBudget;
+$('to-vibes').onclick = ()=>{ syncMembers(); renderMembers(); $('err').textContent=''; showStage(2); };
+$('back-setup').onclick = ()=>showStage(1);
+$('edit-vibes').onclick = ()=>{ renderMembers(); showStage(2); };
+$('restart').onclick = ()=>{ state.members=[]; state.refresh=0; state.table=null; showStage(1); };
+$('find').onclick = async ()=>{
+  let bad = null;
+  state.members.forEach((m,i)=>{ const c=$('person'+i); const missing = m.moods.size===0; c.classList.toggle('bad', missing); if(missing && bad===null) bad=m; });
+  if(bad){ $('err').textContent = `Pick at least one vibe for everyone (${bad.name||'someone'} is missing one).`; return; }
+  $('err').textContent = '';
+  $('find').disabled = true; $('find').textContent = 'Matching…';
+  state.refresh = 0;
+  await compute();
+  $('find').disabled = false; $('find').textContent = 'Find hangouts';
+  showStage(3); renderResults();
 };
-document.getElementById('mode-group').onclick = ()=>{
-  mode='group';
-  document.getElementById('mode-group').classList.add('active');
-  document.getElementById('mode-solo').classList.remove('active');
-  document.getElementById('mood-field').style.display='none';
-  document.getElementById('members-field').style.display='block';
-  renderMembers();
-};
-document.getElementById('add-member').onclick = ()=>{
-  members.push({name:'Member '+(members.length+1), moods:new Set()});
-  renderMembers();
-};
-document.getElementById('go').onclick = ()=>{ mode==='solo' ? runSolo() : runGroup(); };
-document.querySelectorAll('#tabs-wrap button').forEach(b=>{
+$('refresh').onclick = ()=>{ if(state.refresh < MAX_REFRESH){ state.refresh++; renderResults(); } };
+document.querySelectorAll('#tabs button').forEach(b=>{
   b.onclick = ()=>{
-    document.querySelectorAll('#tabs-wrap button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentStrategy = b.dataset.strat;
-    renderGroupResults();
+    document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); state.strategy = b.dataset.strat; renderResults();
   };
 });
-
-renderSoloChips();
+updateBudget();
 </script>
+
 </body>
 </html>

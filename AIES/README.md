@@ -25,11 +25,14 @@ where members often disagree.
 just open it in any browser (double-click it, or drag it into a browser
 window). No install, no server, no internet connection needed once opened.
 
-- **Solo mode**: pick mood chips + interests + budget + group size -> ranked
-  activity cards with real Bangalore venue examples
-- **Group mode**: add members, each picks their own moods -> compare
-  Average / Least Misery / Borda Count side by side, with a per-member score
-  bar on every card
+- **Step 1, setup**: pick the number of people (dropdown), set a budget per
+  person with a slider, and say whether outdoor activities are fine
+- **Step 2, everyone's vibe**: each person picks vibes and interests from
+  dropdowns and can add a free-text note
+- **Step 3, results**: the scoring agent matches activities to every person and
+  the group view balances them (Balanced / Fair to everyone / Group vote). You
+  get per-person match bars, a "least matched" hint, and up to 3 refreshes for
+  new suggestions
 
 Note: this is a **JavaScript reimplementation** of the matching logic, not
 the Python pipeline running in-browser (a static HTML page can't execute
